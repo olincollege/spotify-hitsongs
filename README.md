@@ -19,7 +19,7 @@ For understanding this project thouroughly, please access the computational essa
 | Requests  | web API         |
 | SpotiPy   | Spotify API     |
 
- The dependencies are present in `requirements.txt` and can be installed using the following in terminal:
+ The dependencies are present in `requirements.txt` and can be installed using the following in terminal/command prompt:
  
  ```
  pip install -r requirements.txt
@@ -39,7 +39,7 @@ The sample extracted data output can be seen below:
 
 We used the module `spotifydata.py` to extract data from Spotify's web API. Please refer to this module for detailed instructions to extract and process spotify API data.
 
-We first set up the SPotiPy client using our Spotify API access credentials:
+We first set up the SpotiPy client using our Spotify API access credentials in the python module:
 ```
 client_credentials_manager = SpotifyClientCredentials(client_id=CLIENT_ID, client_secret=CLIENT_SECRET)
 sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
