@@ -30,6 +30,7 @@ The data used in this study is from Spotify's ['The Million Playlist'](https://r
 We obtain the web API access keys which includes `CLIENT_ID` and `CLIENT_SECRET` from [Spotify Developer Tools](https://developer.spotify.com) by creating a developer account and a project.
 
 The sample extracted data output can be seen below:
+
 ![](samplespotifydata.png)
 
 ## Data Extraction
