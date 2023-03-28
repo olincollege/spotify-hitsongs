@@ -4,7 +4,8 @@ Sparsh Gupta and Sohum Kothavade
 
 ## Project Description
 
-In this project, we explore how certain non-musical factors, for example, release date of songs, album, etc. are correlated to the 'popularity' of a song and how these factors affect the successfulness of a song.
+In this project, we explore how certain non-musical factors, for example, release date of songs, album, etc. are correlated to the 'popularity' of a song and how these factors affect the successfulness of a song. To do this, we used Spotify's API to obtain data from ['The Million Playlist'](https://research.atspotify.com/2020/09/the-million-playlist-dataset-remastered/) dataset. We process this data to extract statistics for the non-musical factors being considered in this study and use visualizations to understand how these are related to the 'popularity' of a song.
+
 
 For understanding this project thouroughly, please access the computational essay `spotify-hitsongs.ipynb` inculded in this repository.
 
