@@ -34,9 +34,9 @@ for playlist in playlists['items']:
     # Iterate over each track and extract data
     for track in tracks:
         # Get the track ID and name
-        if type(track['track']['id']) is str:
+        try:
             track_id = track['track']['id']
-        else:
+        except TypeError:
             continue
         track_name = track['track']['name']
         
