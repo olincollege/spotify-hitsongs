@@ -18,7 +18,7 @@ def load_data(filename):
 
 def extract_column(data, column):
     """
-    Function to extract the desired column from data.
+    Function to extract the desired column from a Pandas DataFrame.
 
     Args:
         data: A Pandas DataFrame
@@ -30,7 +30,3 @@ def extract_column(data, column):
     column = data[str(column)]
     print(column.head())
     return column
-
-
-spotify_data = load_data('data.csv')
-playlist = extract_column(spotify_data, 'playlist_name')
