@@ -37,6 +37,8 @@ The sample extracted data output can be seen below:
 
 We obtain the web API access keys which includes `CLIENT_ID` and `CLIENT_SECRET` from [Spotify Developer Tools](https://developer.spotify.com) by creating a developer account and a project.
 
+If you would like to authorize into your Spotify User Account before extracting the API data (recommended), you can use the module `spotifyrequests.py` and enter your `CLIENT_ID` and `CLIENT_SECRET`. If the request to authorize the account succeeds, you will be outputted an alphanumeric API access token. If you want to access the API data without user authorization (not recommended), you can skip this step.
+
 We used the module `spotifydata.py` to extract data from Spotify's web API. Please refer to this module for detailed instructions to extract and process spotify API data.
 
 We first set up the SpotiPy client using our Spotify API access credentials in the python module:
