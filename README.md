@@ -12,11 +12,11 @@ For understanding this project thouroughly, please access the computational essa
 
 ## Dependencies
 
-|  Package  |      Uses       |
+| Package   | Uses            |
 |-----------|-----------------|
 | Matplotlib| Visualization   |
 | Pandas    | Data Processing |
-| Requests  | web API         |
+| Requests  | Web Requests    |
 | SpotiPy   | Spotify API     |
 
  The dependencies are present in `requirements.txt` and can be installed using the following in terminal/command prompt:
