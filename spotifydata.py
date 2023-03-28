@@ -1,16 +1,17 @@
+"""
+Module for Data Extraction using Spotify API and Data Processing
+"""
 import pandas as pd
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 from spotify_api_keys import get_client_id, get_client_secret
 
-
 # Set up the SpotiPy client with your Spotify app credentials
-client_id = get_client_id()
-client_secret = get_client_secret()
+CLIENT_ID = get_client_id()
+CLIENT_SECRET = get_client_secret()
 client_credentials_manager = SpotifyClientCredentials(
-    client_id=client_id, client_secret=client_secret)
+    client_id=CLIENT_ID, client_secret=CLIENT_SECRET)
 sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
-
 
 # Get a list of playlists in the Million Playlist Project
 playlists = sp.user_playlists('spotify', limit=50)
@@ -27,7 +28,7 @@ for playlist in playlists['items']:
     # Get the playlist ID and name
     playlist_id = playlist['id']
     playlist_name = playlist['name']
-    
+
     # Get the tracks in the playlist
     tracks = sp.playlist_items(playlist_id)['items']
 
@@ -39,19 +40,20 @@ for playlist in playlists['items']:
         except TypeError:
             continue
         track_name = track['track']['name']
-        
+
         # Get additional track data
         track_data = sp.track(track_id)
         track_album = track_data['album']['name']
-        track_artists = ', '.join([artist['name']
-                                   for artist in track_data['artists']])
+        track_artists = ', '.join(  # pylint: disable=invalid-name
+            [artist['name']
+             for artist in track_data['artists']])
         track_release_date = track_data['album']['release_date']
         track_length = track_data['duration_ms']
         track_popularity = track_data['popularity']
         track_explicit = track_data['explicit']
         track_markets = len(track_data['available_markets'])
         track_album_type = track_data['album']['album_type']
-        
+
         # Print the sample extracted data for the track
         print(f"Playlist: {playlist_name}")
         print(f"Track: {track_name}")
@@ -67,9 +69,9 @@ for playlist in playlists['items']:
 
         # Appending the list with track data
         data.append([playlist_name, track_name, track_album,
-                    track_artists, track_release_date, track_length,
-                    track_popularity, track_explicit, track_markets,
-                    track_album_type])
+                     track_artists, track_release_date, track_length,
+                     track_popularity, track_explicit, track_markets,
+                     track_album_type])
 
 # Converting list to Pandas DataFrame
 data = pd.DataFrame(data)
