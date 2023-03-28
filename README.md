@@ -8,7 +8,7 @@ In this project, we explore how certain non-musical factors, for example, releas
 
 ## Dependencies
 
-|  Package  |      Need       |
+|  Package  |      Uses       |
 |-----------|-----------------|
 | Matplotlib| Visualization   |
 | Pandas    | Data Processing |
