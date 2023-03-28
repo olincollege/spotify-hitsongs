@@ -19,7 +19,7 @@ For understanding this project thouroughly, please access the computational essa
 | Requests  | Web Requests    |
 | SpotiPy   | Spotify API     |
 
- The dependencies are present in `requirements.txt` and can be installed using the following in terminal/command prompt:
+ The dependencies are present in `requirements.txt` and can be installed using the following in terminal/command prompt (make sure to have your present working directory as this repo):
  
  ```
  pip install -r requirements.txt
