@@ -1,11 +1,12 @@
 import pandas as pd
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
+from spotify_api_keys import get_client_id, get_client_secret
 
 
 # Set up the SpotiPy client with your Spotify app credentials
-client_id = '<client_id>'
-client_secret = '<client_secret>'
+client_id = get_client_id()
+client_secret = get_client_secret()
 client_credentials_manager = SpotifyClientCredentials(
     client_id=client_id, client_secret=client_secret)
 sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
@@ -33,7 +34,10 @@ for playlist in playlists['items']:
     # Iterate over each track and extract data
     for track in tracks:
         # Get the track ID and name
-        track_id = track['track']['id']
+        if type(track['track']['id']) is str:
+            track_id = track['track']['id']
+        else:
+            continue
         track_name = track['track']['name']
         
         # Get additional track data
@@ -63,9 +67,9 @@ for playlist in playlists['items']:
 
         # Appending the list with track data
         data.append([playlist_name, track_name, track_album,
-                           track_artists, track_release_date, track_length,
-                           track_popularity, track_explicit, track_markets,
-                           track_album_type])
+                    track_artists, track_release_date, track_length,
+                    track_popularity, track_explicit, track_markets,
+                    track_album_type])
 
 # Converting list to Pandas DataFrame
 data = pd.DataFrame(data)
