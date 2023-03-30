@@ -76,7 +76,7 @@ def create_visualizations(data_file, output_dir):
     # Select 100 random values
     random_indices = np.random.choice(len(release_counts), size=100,
                                       replace=False)
-    random_values = release_counts.iloc[random_indices]
+    random_values = release_counts.iloc[random_indices].sort_values()
     # Create scatter plot
     plt.figure(figsize=(15, 6))
     plt.scatter(random_values.index.astype(str), random_values, alpha=0.5)
