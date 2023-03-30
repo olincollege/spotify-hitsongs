@@ -1,5 +1,6 @@
-#!/usr/bin/env python
-# coding: utf-8
+"""
+Module to visualize data
+"""
 
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -20,7 +21,7 @@ def create_visualizations(data_file, output_dir):
 
     Example:
         create_visualizations('hit_songs.csv', 'visualization_outputs/')
-"""
+    """
     # Load data
     data = pd.read_csv(data_file)
 
@@ -84,5 +85,5 @@ def create_visualizations(data_file, output_dir):
     plt.xlabel('Number of Available Markets')
     plt.ylabel('Popularity')
     plt.title('Number of Markets vs Popularity')
-    plt.savefig(output_dir + '/available_markets_distribution.png')
+    plt.savefig(output_dir + '/markets_vs_popularity.png')
     plt.clf()
