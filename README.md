@@ -47,11 +47,6 @@ client_credentials_manager = SpotifyClientCredentials(client_id=CLIENT_ID, clien
 sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
 ```
 
-Then, using the SpotiPy client, we get a list of playlists from Spotify's data:
-```
-playlists = sp.user_playlists('spotify', limit=50)
-```
-
 ## Data Processing
 
 Using Pandas, we process the dataset accessed through the API and store it to the csv file `data.csv`
