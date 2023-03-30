@@ -56,7 +56,7 @@ To run the code in this repo, please clone this repo to your local machine and r
 python3 main.py
 ```
 
-Executing `main.py` will automatically extract the dataset, process it, and generate visualizations provided the above API Access is completed correctly.
+Executing `main.py` using python will automatically extract the dataset, process it, and generate visualizations, provided the above API Access step is completed successfully.
 
 ## Data Extraction & Processing
 
