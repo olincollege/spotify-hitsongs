@@ -1,3 +1,6 @@
+"""
+Main module to execute project code
+"""
 # Import the functions to test
 from spotifydata import get_spotify_data
 from visualization import create_visualizations

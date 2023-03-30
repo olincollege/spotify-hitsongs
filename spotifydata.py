@@ -12,6 +12,7 @@ CLIENT_SECRET = get_client_secret()
 
 
 def get_spotify_data(client_id, client_secret):
+    # pylint: disable-msg=too-many-locals
     """
     Extracts data for each track in the top 50 playlists of the
     Million Playlist Project on Spotify,
@@ -44,8 +45,8 @@ def get_spotify_data(client_id, client_secret):
     """
     # Authenticate with Spotify API
     auth_manager = SpotifyClientCredentials(client_id=client_id,
-                                             client_secret=client_secret)
-    sp = spotipy.Spotify(auth_manager=auth_manager)
+                                            client_secret=client_secret)
+    client = spotipy.Spotify(auth_manager=auth_manager)
 
     print("\n")
     print("=" * 50)
@@ -53,7 +54,7 @@ def get_spotify_data(client_id, client_secret):
     print("=" * 50)
 
     # Get a list of playlists in the Million Playlist Project
-    playlists = sp.user_playlists('spotify', limit=50)
+    playlists = client.user_playlists('spotify', limit=50)
     # limit the number of playlists to 50
 
     # List to store data
@@ -66,7 +67,7 @@ def get_spotify_data(client_id, client_secret):
         playlist_name = playlist['name']
 
         # Get the tracks in the playlist
-        tracks = sp.playlist_items(playlist_id)['items']
+        tracks = client.playlist_items(playlist_id)['items']
 
         # Iterate over each track and extract data
         for track in tracks:
@@ -78,7 +79,7 @@ def get_spotify_data(client_id, client_secret):
             track_name = track['track']['name']
 
             # Get additional track data
-            track_data = sp.track(track_id)
+            track_data = client.track(track_id)
             track_album = track_data['album']['name']
             track_artists = ', '.join(
                 [artist['name'] for artist in track_data['artists']])
@@ -112,4 +113,3 @@ def get_spotify_data(client_id, client_secret):
                 index=False)
 
     return data
-
