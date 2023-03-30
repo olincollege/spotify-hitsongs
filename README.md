@@ -33,20 +33,20 @@ The sample extracted data output can be seen below:
 
 ![](samplespotifydata.png)
 
-## Data Extraction
+## API Access
 
 We obtain the web API access keys which includes `CLIENT_ID` and `CLIENT_SECRET` from [Spotify Developer Tools](https://developer.spotify.com) by creating a developer account and a project.
 
 If you would like to authorize into your Spotify User Account before extracting the API data (recommended), you can use the module `spotifyrequests.py` and enter your `CLIENT_ID` and `CLIENT_SECRET`. If the request to authorize the account succeeds, you will be outputted an alphanumeric API access token. If you want to access the API data without user authorization (not recommended), you can skip this step.
 
-We used the module `spotifydata.py` to extract data from Spotify's web API. Please refer to this module for detailed instructions to extract and process spotify API data.
+Once you obtain the `CLIENT_ID` and `CLIENT_SECRET`, enter the keys in `spotify_api_keys.py` inside the appropriate functions
 
-We first set up the SpotiPy client using our Spotify API access credentials in the python module:
-```
-client_credentials_manager = SpotifyClientCredentials(client_id=CLIENT_ID, client_secret=CLIENT_SECRET)
-sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
-```
+We use the following functions from `spotify_api_keys.py` (private file) to access the API keys stored in this via the following functions:
 
+```
+CLIENT_ID = get_client_id()
+CLIENT_SECRET = get_client_secret()
+```
 ## Code Execution
 
 To run the code in this repo, please clone this repo to your local machine and run `main.py` in either a Python-compatible IDE or if using a terminal/command prompt (make sure to have your present working directory as this repo):
@@ -55,8 +55,28 @@ To run the code in this repo, please clone this repo to your local machine and r
 python3 main.py
 ```
 
-## Data Processing
+Executing `main.py` will automatically extract the dataset, process it, and generate visualizations provided the above API Access is completed correctly.
 
-Using Pandas, we process the dataset accessed through the API and store it to the csv file `data.csv`
+## Data Extraction & Processing
+
+We used the module `spotifydata.py` to extract data from Spotify's web API using the following function.
+
+```
+get_spotify_data(CLIENT_ID, CLIENT_SECRET)
+```
+
+The above function also processes the dataset accessed through the API and stores it to the csv file `data.csv`
 
 ## Visualization
+
+The visualizations for this project are created using the following function from the module `visualizations.py`
+
+```
+create_visualizations('data.csv', 'figures')
+```
+
+The function uses the data file `data.csv` to generate visualizations and stores the visualizations in the directory `figures`
+
+## Unit Tests
+
+The unit tests for this project tests the code for functions `get_spotify_data()` and `create_visualizations()` in the module `spotify_hit_songs_test.py`
