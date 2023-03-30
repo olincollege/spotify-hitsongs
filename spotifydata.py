@@ -4,17 +4,12 @@ Module for Data Extraction using Spotify API and Data Processing
 import pandas as pd
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
-from spotify_api_keys import get_client_id, get_client_secret
-
-# Set up the SpotiPy client with your Spotify app credentials
-CLIENT_ID = get_client_id()
-CLIENT_SECRET = get_client_secret()
 
 
 def get_spotify_data(client_id, client_secret):
     # pylint: disable-msg=too-many-locals
     """
-    Extracts data for each track in the top 50 playlists of the
+    Extracts data for each track from 50 playlists of the
     Million Playlist Project on Spotify,
     using the Spotify API and the provided client ID and secret.
 
@@ -46,19 +41,20 @@ def get_spotify_data(client_id, client_secret):
     # Authenticate with Spotify API
     auth_manager = SpotifyClientCredentials(client_id=client_id,
                                             client_secret=client_secret)
-    client = spotipy.Spotify(auth_manager=auth_manager)
+    sp = spotipy.Spotify(  # pylint: disable=invalid-name
+        auth_manager=auth_manager)
 
     print("\n")
     print("=" * 50)
     print("Extracting Data")
     print("=" * 50)
 
-    # Get a list of playlists in the Million Playlist Project
-    playlists = client.user_playlists('spotify', limit=50)
-    # limit the number of playlists to 50
-
     # List to store data
     data = []
+
+    # Get a list of playlists in the Million Playlist Project
+    playlists = sp.user_playlists('spotify', limit=50)
+    # limit the number of playlists to 50
 
     # Iterate over each playlist and extract data for each track in the playlist
     for playlist in playlists['items']:
@@ -67,7 +63,7 @@ def get_spotify_data(client_id, client_secret):
         playlist_name = playlist['name']
 
         # Get the tracks in the playlist
-        tracks = client.playlist_items(playlist_id)['items']
+        tracks = sp.playlist_items(playlist_id)['items']
 
         # Iterate over each track and extract data
         for track in tracks:
@@ -79,10 +75,11 @@ def get_spotify_data(client_id, client_secret):
             track_name = track['track']['name']
 
             # Get additional track data
-            track_data = client.track(track_id)
+            track_data = sp.track(track_id)
             track_album = track_data['album']['name']
-            track_artists = ', '.join(
-                [artist['name'] for artist in track_data['artists']])
+            track_artists = ', '.join(  # pylint: disable=invalid-name
+                [artist['name']
+                 for artist in track_data['artists']])
             track_release_date = track_data['album']['release_date']
             track_length = track_data['duration_ms']
             track_popularity = track_data['popularity']
@@ -90,13 +87,13 @@ def get_spotify_data(client_id, client_secret):
             track_markets = len(track_data['available_markets'])
             track_album_type = track_data['album']['album_type']
 
-            # Append the list with track data
+            # Appending the list with track data
             data.append([playlist_name, track_name, track_album,
                          track_artists, track_release_date, track_length,
                          track_popularity, track_explicit, track_markets,
                          track_album_type])
 
-    # Convert list to Pandas DataFrame
+    # Converting list to Pandas DataFrame
     data = pd.DataFrame(data)
 
     print("\n")
@@ -104,7 +101,7 @@ def get_spotify_data(client_id, client_secret):
     print("Storing Data into data.csv")
     print("=" * 50)
 
-    # Export track data into a csv file
+    # Exporting track data into a csv file
     data.to_csv("data.csv",
                 header=["playlist_name", "track_name", "track_album",
                         "track_artists", "track_release_date",

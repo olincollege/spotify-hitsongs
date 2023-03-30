@@ -1,5 +1,5 @@
 """
-Module to test function using pytest
+Module to test functions
 """
 
 import os
@@ -52,7 +52,7 @@ class TestDataVisualizations(unittest.TestCase):
         expected_columns = ["playlist_name", "track_name", "track_album",
                             "track_artists", "track_release_date",
                             "track_length", "track_popularity",
-                            "track_explicit", "track_markets"]
+                            "track_explicit"]
         self.assertListEqual(list(data.columns), expected_columns)
 
         # Test that the DataFrame contains at least one row
