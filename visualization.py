@@ -8,6 +8,7 @@ import numpy as np
 
 
 def create_visualizations(data_file, output_dir):
+    # pylint: disable=too-many-statements
     """
     Generates various visualizations based on hit song data and saves them to
     the specified output directory.
@@ -66,8 +67,10 @@ def create_visualizations(data_file, output_dir):
     plt.savefig(output_dir + '/top_artists_by_popularity.png')
     plt.clf()
 
-    # Convert release date to datetime and group by year/month
+    # Convert release date to datetime and filter data
     data['release_date'] = pd.to_datetime(data['track_release_date'])
+    data = data[data['release_date'] >= '2010-01-01']
+    # Group by year/month and count
     data['year_month'] = data['release_date'].dt.to_period('M')
     release_counts = data['year_month'].value_counts().sort_index()
     # Select 100 random values
@@ -79,7 +82,7 @@ def create_visualizations(data_file, output_dir):
     plt.scatter(random_values.index.astype(str), random_values, alpha=0.5)
     plt.xlabel('Year/Month', fontsize=7)
     plt.ylabel('Number of Hit Songs')
-    plt.title('Random Sample of Release Date Distribution')
+    plt.title('Random Sample of Release Date Distribution after 01/2010')
     plt.xticks(rotation=90, fontsize=7)
     plt.savefig(output_dir + '/release_date_distribution.png')
     plt.clf()
