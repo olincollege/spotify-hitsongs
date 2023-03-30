@@ -229,7 +229,7 @@ Firstly, we plot a histogram which demonstrates the frequency of songs/tracks in
 
 ![](figures/popularity_distribution.png)
 
-We observe that the most frequency of songs in the data lie between the 'popularity' of 70-80 which lets us know that most songs in this dataset are more popular than average. We also interpret that very low number of tracks lie in the 'popularity' range of 0-20 and therefore, not many songs are highly unpopular or unsuccessful. Also, songs which are extremely successful (popularity: 90-100) have low frequency of occurrence in the dataset. By analyzing this, we can conclude that this dataset sample reflects an actual real-world music data.
+We observe that the most frequency of songs in the data lie between the 'popularity' of 70-80 which lets us know that most songs in this dataset are more popular than average. We also interpret that very low number of tracks lie in the 'popularity' range of 0-20 and therefore, not many songs are highly unpopular or unsuccessful. Also, songs which are extremely successful (popularity: 90-100) have low frequency of occurrence in the dataset. By analyzing this, we can conclude with pretty high confidence that this dataset sample reflects an actual real-world music data.
 
 Now, we will look at a very important factor, length of the song/track (in milliseconds), and how it affects whether a song gets popular or not.
 
@@ -237,6 +237,42 @@ Now, we will look at a very important factor, length of the song/track (in milli
 
 We observe that most songs lie between the length of 10,000 - 30,000 milliseconds regardless of 'popularity' and also do not affect whether a song becomes 'hit' or not. Although, we do observe the trend that if a song's length is too short (< 10,000 ms), it does not get popular ('popularity' lies below 40). Therefore, by this data, we can conclude that a track's length does not affect a song's success unless it is too short.
 
+Next, we explore whether having explicit words/content in the lyrics of a song affects how popular it becomes. To do this, we first categorize songs based on explicit content. If they are explicit, they are classified with the label `True` otherwise `False`. We take the `mean_popularity` as explained in the above section for all songs in each of the both label categories.
+
+![](figures/explicit_content_vs_popularity.png)
+
+This bar chart is very insightful because we observe that the 'popularity' of a song is mostly unaffected by the explicit content in the song's lyrics. We see that for both the classes, the `mean_popularity` has a very slight difference, with songs having no explicit content of course being slightly more popular. Although, this difference does not direct to a pretty solid conclusion, we can infer that for the most part, a song can become 'hit' regardless of having explicit content.
 
 ## Conclusion
+
+**Important Insights:**
+1. Some non-musical factors can contribute significantly to the popularity of a song: This project highlights how factors like release date of songs, song artists, etc. play a role in determining the success of a song. However, we also found out that factors like track length, explicit lyrics, etc. actually have no major effect on the popularity/success of a song.
+2. Spotify's popularity metric is a useful tool for analyzing the success of a song: Spotify's popularity metric is based on a combination of factors, including the total number of plays and how recent those plays are. By using this metric, we can classify songs as "hits" or "non-hits" and analyze the factors that contribute to their success.
+3. Data analysis can provide valuable insights for decision-making in the music industry: By analyzing data from Spotify and other sources, we can gain valuable insights into what makes a song successful. These insights can be used by music producers, record labels, and artists to adjust their strategies and increase the likelihood of creating a hit song.
+
+**Contextual Implications:**
+
+1. The reliance on Spotify's algorithm for determining the popularity of a song: This algorithm is based on the number of plays and how recent those plays are, and it does not necessarily reflect the quality or artistic value of the song. Therefore, the analysis may not provide a complete picture of what makes a hit song, and it may overlook important factors such as the creativity and originality of the song.
+
+2. Another implication is the potential bias in the dataset used in the analysis. The Million Playlist dataset may not be representative of the entire population of Spotify users, and it may not include songs from certain genres or artists. Therefore, the results of the analysis may not be generalizable to the entire population of Spotify users or to the music industry as a whole.
+
+**Ethical implications:**
+
+The project's ethical implications primarily relate to data privacy and the responsible use of machine learning algorithms. The use of Spotify's API to obtain data from The Million Playlist dataset raises questions about data privacy and the ethical use of user data. It is essential to ensure that the data obtained through the API is anonymized and that the users' privacy is respected.
+
+**Lessons learned from this project:**
+
+1. The importance of data processing and visualization: The project highlights the importance of processing and visualizing large datasets to understand patterns and trends.
+2. The potential benefits of understanding patterns and trends in data: Despite the limitations and ethical concerns, understanding patterns and trends in large datasets can provide valuable insights into various industries and fields.
+3. The limitations of relying on algorithmic metrics: The project raises concerns about relying solely on algorithmic metrics, such as Spotify's popularity metric, to evaluate the success of a song.
+
+**Challenges in the project:**
+
+1. Extracting data from Spotify's API took a really long time to fetch data quite a few times.
+2. Reading track data from extracted data using Spotipy library was working fine for a while and then it stopped doing so which reflects some inconsistencies between real-time updates to Spotify's API conflicting with data fields in Spotipy (which does not get updated often).
+
+**Future Work:**
+1. Refining the analysis: After conducting an initial analysis, there may be opportunities to refine the analysis and explore additional factors that contribute to the success of a song. For example, you could explore how features of a song, such as tempo or duration, affect its popularity.
+2. Machine Learning: Using this analysis, we can identify features that do affect the popularity of a song and then use those features to create a Machine Learning model that could predict based on this feature data whether a song will become successful or not.
+3. Improving the tooling: This project could be turned into a more robust tool that could be used to analyze data and provide insights to a wider audience. For example, the tool could be turned into a web application that allows users to explore the data and conduct their own analyses.
 
