@@ -15,6 +15,7 @@ For understanding this project thouroughly, please access the computational essa
 | Package   | Uses            |
 |-----------|-----------------|
 | Matplotlib| Visualization   |
+| NumPy     | Random Sampling |
 | Pandas    | Data Processing |
 | Requests  | Web Requests    |
 | SpotiPy   | Spotify API     |
