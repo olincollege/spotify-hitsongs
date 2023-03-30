@@ -47,6 +47,14 @@ client_credentials_manager = SpotifyClientCredentials(client_id=CLIENT_ID, clien
 sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
 ```
 
+## Code Execution
+
+To run the code in this repo, please clone this repo to your local machine and run `main.py` in either a Python-compatible IDE or if using a terminal/command prompt (make sure to have your present working directory as this repo):
+
+```
+python3 main.py
+```
+
 ## Data Processing
 
 Using Pandas, we process the dataset accessed through the API and store it to the csv file `data.csv`
