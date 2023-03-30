@@ -45,7 +45,7 @@ class TestDataVisualizations(unittest.TestCase):
         contains at least one row, and contains no null values.
         """
         # Test that the function returns a Pandas DataFrame
-        data = get_spotify_data(CLIENT_ID, CLIENT_SECRET) #
+        data = get_spotify_data(CLIENT_ID, CLIENT_SECRET)
         self.assertIsInstance(data, pd.DataFrame)
 
         # Test that the DataFrame contains the expected columns
