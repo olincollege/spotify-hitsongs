@@ -1,0 +1,242 @@
+---
+jupyter: python3
+---
+
+# Spotify Hit Songs: How non-musical factors make a song successful?
+
+### SoftDes Mid-term Project - Spring 2023 - Olin College of Engineering
+### Sparsh Gupta and Sohum Kothavade
+
+## Introduction
+
+Research Question: How non-musical factors make a song successful?
+
+Music as an industry has revolved significantly in the past couple decades. With digital inventions such as iTunes by Apple (2001) and music streaming services like Spotify, Apple Music, etc. revolutionizing this industry, listening to music has become very accessible for every individual.Therefore, music creators and artists have increasingly delved into this industry to pursue their passion and create original music/songs. Consequently, the music industry has become extremely competitive for artists willing to make a mark in the field and be successful by creating 'hit' songs.
+
+Spotify, a music streaming service launched in 2006, has become the world's largest music provider having 433 million total users as of 2022 in 184 markets/regions across the world. This has resulted in most songs having their primary listeners on Spotify and most number of listens/streams on this platform as well. Therefore, obtaining statistics from Spotify data would enable us to look into some interesting patterns/trends which make a 'hit' song.
+
+Now, how do we define a 'hit' song? Spotify's data includes a parameter for every music/song track called the 'popularity'. This is a value between 0 and 100, with 100 being the most popular. This 'popularity' is based on spotify's algorithm which utilizes statistics such as the total number of plays of the track and how recent those plays are. We use this metric to classify songs as a 'hit' song or not which we will explore in this essay later.
+
+In this computational essay, we will primarily explore how certain non-musical factors, for example, release date of songs, album, etc. are correlated to the 'popularity' of a song and how these factors affect the successfulness of a song. To do this, we used Spotify's API to obtain data from 'The Million Playlist' dataset. We process this data to extract statistics for the non-musical factors being considered in this study and use visualizations to understand how these are related to the 'popularity' of a song.
+
+## Methodology
+
+The data used in this study is from Spotify's ['The Million Playlist'](https://research.atspotify.com/2020/09/the-million-playlist-dataset-remastered/) dataset. We obtained the data used in this study from Spotify's API which gives us access to a million playlists of songs consisting of more than a hundred million songs/tracks.
+
+ Spotify's Web API is based on REST principles and the data resources are accessed via standard HTTPS requests to an API endpoint from Python. We used an authorized valid access token to make successful Web API requests and get access to the music statistics data. We access the API tokens using functions from the file `spotify_api_keys.py` as follows:
+
+```{python}
+#| collapsed: false
+#| pycharm: {name: "#%%\n"}
+# Get API keys
+CLIENT_ID = get_client_id()
+CLIENT_SECRET = get_client_secret()
+```
+
+We also utilized Python's SpotiPy package to extract data from unique song identifiers. To do this, we import Pandas and the required modules from SpotiPy:
+
+```{python}
+#| collapsed: false
+#| pycharm: {name: "#%%\n"}
+import pandas as pd
+import spotipy
+from spotipy.oauth2 import SpotifyClientCredentials
+```
+
+This complete process to extract the spotify data is encapsulated in the following function in `spotify_data.py`
+
+```{python}
+#| collapsed: false
+#| pycharm: {name: "#%%\n"}
+get_spotify_data(CLIENT_ID, CLIENT_SECRET)
+```
+
+By calling this function, we first authenticate from our Spotify web API Developer User Account to access the data which prompts a user to sign in. We then authenticate our API token (client ID and client secret) to access the data, while creating our "Spotify" object using the following lines of code:
+
+```{python}
+#| collapsed: false
+#| pycharm: {name: "#%%\n"}
+# Setting up the SpotiPy client with Spotify app credentials
+client_credentials_manager = SpotifyClientCredentials(
+    client_id=CLIENT_ID, client_secret=CLIENT_ID)
+sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
+```
+
+The dataset is formatted like a Python dictionary, and we read and append the desired data into a list which consists the data of tracks for several chosen non-musical factors.
+
+A sample of the extracted data looks like the following:
+
+![](samplespotifydata.png)
+
+We use the SpotiPy client to get a list of fifty playlists (randomly based on the API request) from the Spotify's dataset using this:
+
+```{python}
+#| collapsed: false
+#| pycharm: {name: "#%%\n"}
+# Get a list of playlists in the Million Playlist Project
+playlists = sp.user_playlists('spotify', limit=50)
+# limit the number of playlists to 50
+```
+
+We process the data to obtain useful track information from the playlists. Then, we use Pandas to convert the list of track data to a Pandas DataFrame by the following:
+
+```{python}
+#| collapsed: false
+#| pycharm: {name: "#%%\n"}
+# Converting list to Pandas DataFrame
+data = pd.DataFrame(data)
+```
+
+Then, we export this DataFrame to a comma-seperated values (csv) file using Pandas (consisting of a header of our chosen non-musical factors) and store it on our local desktop.
+
+```{python}
+#| collapsed: false
+#| pycharm: {name: "#%%\n"}
+# Exporting track data into a csv file
+data.to_csv("data.csv",
+            header=["playlist_name", "track_name", "track_album",
+                    "track_artists", "track_release_date",
+                    "track_length", "track_popularity", "track_explicit",
+                    "track_markets", "track_album_type"],
+            index=False)
+```
+
+In our study, we extract a total of ten data columns including the 'popularity' metric and nine major non-musical factors that we have identified listed below:
+
+- **track_popularity**: This is a measure of the track's popularity on the streaming service, usually based on the number of plays or listens.
+- **playlist_name**: This is the name of the playlist, which is a collection of tracks organized by a user or the streaming service.
+- **track_name**: This is the name of the individual track within the playlist.
+- **track_album**: This refers to the album that the track is a part of, which may have multiple tracks.
+- **track_artists**: These are the artists who performed the track.
+- **track_release_date**: This is the date when the track was officially released by the artist.
+- **track_length**: This is the duration of the track in milliseconds.
+- **track_explicit**: This indicates whether the track contains explicit lyrics or content.
+- **track_markets**: This is the number of geographic regions where the track is available for streaming.
+- **track_album_type**: This describes the type of album that the track belongs to, such as a studio album, live album, or compilation album.
+
+Using the `visualization.py` module, we generate visualizations based on this data by calling the function:
+
+```{python}
+#| collapsed: false
+#| pycharm: {name: "#%%\n"}
+create_visualizations('data.csv', 'figures')
+```
+
+We import several libraries to utilize in this function for data processing and plots.
+
+```{python}
+#| collapsed: false
+#| pycharm: {name: "#%%\n"}
+import pandas as pd
+import matplotlib.pyplot as plt
+```
+
+This function first loads the stored csv file into the program using:
+
+```{python}
+#| collapsed: false
+#| pycharm: {name: "#%%\n"}
+data = pd.read_csv('data.csv')
+```
+
+Overall, we obtain the desired features/non-musical factors and our metric into one csv file by using the 'Pandas' module which we can utilize to plot visualizations and understand the data as we will see in this essay further.
+
+To generate visualizations, we first plot several histograms, scatter plots, line charts, and bar charts by using the library `matplotlib.pyplot`.
+
+For example, a histogram is generated using the following code:
+
+```{python}
+#| collapsed: false
+#| pycharm: {name: "#%%\n"}
+# Create histogram
+plt.hist(data['track_popularity'], bins=20)
+plt.xlabel('Popularity')
+plt.ylabel('Number of songs')
+plt.title('Popularity Distribution (frequency)')
+```
+
+To generate a scatter plot, we use the following code sample:
+
+```{python}
+#| collapsed: false
+#| pycharm: {name: "#%%\n"}
+# Create scatter plot
+plt.scatter(data['track_length'], data['track_popularity'])
+plt.xlabel('Track Length (ms)')
+plt.ylabel('Popularity')
+plt.title('Track Length vs. Popularity')
+```
+
+For creating several bar charts, we first also calculate `mean_popularity` for tracks and group the data. We do this to obtain the desired format of data for a bar chart representation:
+
+```{python}
+#| collapsed: false
+#| pycharm: {name: "#%%\n"}
+# Group data by explicit content and calculate mean popularity
+mean_popularity = data.groupby('track_explicit')['track_popularity'].mean()
+```
+
+Then, we plot a bar chart using the following code:
+
+```{python}
+#| collapsed: false
+#| pycharm: {name: "#%%\n"}
+# Create bar chart
+plt.bar(mean_popularity.index.astype(str), mean_popularity)
+plt.xlabel('Explicit Content')
+plt.ylabel('Mean Popularity')
+plt.title('Explicit Content vs. Popularity')
+```
+
+We utilize Pandas again to convert raw release data to more visualization-processable format (datetime) which we can use and also group it by year/month.
+
+```{python}
+#| collapsed: false
+#| pycharm: {name: "#%%\n"}
+# Convert release date to datetime and group by year/month
+data['release_date'] = pd.to_datetime(data['track_release_date'])
+data['year_month'] = data['release_date'].dt.to_period('M')
+release_counts = data['year_month'].value_counts().sort_index()
+```
+
+Based on this, we create a line chart with desired criteria for the above using this code:
+
+```{python}
+#| collapsed: false
+#| pycharm: {name: "#%%\n"}
+# Create line chart
+plt.plot(release_counts.index.astype(str), release_counts)
+plt.xlabel('Year/Month')
+plt.ylabel('Number of Hit Songs')
+plt.title('Release Date Distribution')
+plt.xticks(rotation=90)
+```
+
+Finally, we also save the generated plots to an output directory `figures` as a `png` image and consequently close the figures after plotting every figure.
+
+```{python}
+#| collapsed: false
+#| pycharm: {name: "#%%\n"}
+plt.savefig(output_dir + '/visualization.png')
+plt.clf()
+```
+
+## Results
+
+Now, once we have obtained the visualizations, we analyze them for patterns/trends and understanding our initial question about how non-musical factors affect the success of a song. The main metric of focus is the 'popularity' of a track which helps us understand how much successful or 'hit' a song is.
+
+Firstly, we plot a histogram which demonstrates the frequency of songs/tracks in the dataset classified by their 'popularity'. We do this to understand the bias in our dataset and whether it reflects an actual dataset sample.
+
+![](figures/popularity_distribution.png)
+
+We observe that the most frequency of songs in the data lie between the 'popularity' of 70-80 which lets us know that most songs in this dataset are more popular than average. We also interpret that very low number of tracks lie in the 'popularity' range of 0-20 and therefore, not many songs are highly unpopular or unsuccessful. Also, songs which are extremely successful (popularity: 90-100) have low frequency of occurrence in the dataset. By analyzing this, we can conclude that this dataset sample reflects an actual real-world music data.
+
+Now, we will look at a very important factor, length of the song/track (in milliseconds), and how it affects whether a song gets popular or not.
+
+![](figures/length_vs_popularity.png)
+
+We observe that most songs lie between the length of 10,000 - 30,000 milliseconds regardless of 'popularity' and also do not affect whether a song becomes 'hit' or not. Although, we do observe the trend that if a song's length is too short (< 10,000 ms), it does not get popular ('popularity' lies below 40). Therefore, by this data, we can conclude that a track's length does not affect a song's success unless it is too short.
+
+
+## Conclusion
+
