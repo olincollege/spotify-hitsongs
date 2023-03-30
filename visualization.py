@@ -4,6 +4,7 @@ Module to visualize data
 
 import pandas as pd
 import matplotlib.pyplot as plt
+import numpy as np
 
 
 def create_visualizations(data_file, output_dir):
@@ -24,11 +25,6 @@ def create_visualizations(data_file, output_dir):
     """
     # Load data
     data = pd.read_csv(data_file)
-
-    print("\n")
-    print("=" * 50)
-    print("Plotting and Storing visualizations")
-    print("=" * 50)
 
     # Create histogram
     plt.hist(data['track_popularity'], bins=20)
@@ -61,8 +57,11 @@ def create_visualizations(data_file, output_dir):
     # Sort by popularity and select top 10
     top_artists = mean_popularity.sort_values(ascending=False).head(10)
     # Create horizontal bar chart
+    plt.figure(figsize=(15, 6))
+    plt.subplots_adjust(left=0.3, right=0.8)
     plt.barh(top_artists.index, top_artists)
     plt.xlabel('Mean Popularity')
+    plt.ylabel('Artists')
     plt.title('Top 10 Artists by Popularity')
     plt.savefig(output_dir + '/top_artists_by_popularity.png')
     plt.clf()
@@ -71,12 +70,17 @@ def create_visualizations(data_file, output_dir):
     data['release_date'] = pd.to_datetime(data['track_release_date'])
     data['year_month'] = data['release_date'].dt.to_period('M')
     release_counts = data['year_month'].value_counts().sort_index()
-    # Create line chart
-    plt.plot(release_counts.index.astype(str), release_counts)
-    plt.xlabel('Year/Month')
+    # Select 100 random values
+    random_indices = np.random.choice(len(release_counts), size=100,
+                                      replace=False)
+    random_values = release_counts.iloc[random_indices]
+    # Create scatter plot
+    plt.figure(figsize=(15, 6))
+    plt.scatter(random_values.index.astype(str), random_values, alpha=0.5)
+    plt.xlabel('Year/Month', fontsize=7)
     plt.ylabel('Number of Hit Songs')
-    plt.title('Release Date Distribution')
-    plt.xticks(rotation=90)
+    plt.title('Random Sample of Release Date Distribution')
+    plt.xticks(rotation=90, fontsize=7)
     plt.savefig(output_dir + '/release_date_distribution.png')
     plt.clf()
 
@@ -87,3 +91,6 @@ def create_visualizations(data_file, output_dir):
     plt.title('Number of Markets vs Popularity')
     plt.savefig(output_dir + '/markets_vs_popularity.png')
     plt.clf()
+
+
+create_visualizations('data.csv', 'figures')

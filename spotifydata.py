@@ -44,11 +44,6 @@ def get_spotify_data(client_id, client_secret):
     sp = spotipy.Spotify(  # pylint: disable=invalid-name
         auth_manager=auth_manager)
 
-    print("\n")
-    print("=" * 50)
-    print("Extracting Data")
-    print("=" * 50)
-
     # List to store data
     data = []
 
@@ -95,11 +90,6 @@ def get_spotify_data(client_id, client_secret):
 
     # Converting list to Pandas DataFrame
     data = pd.DataFrame(data)
-
-    print("\n")
-    print("=" * 50)
-    print("Storing Data into data.csv")
-    print("=" * 50)
 
     # Exporting track data into a csv file
     data.to_csv("data.csv",

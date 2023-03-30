@@ -17,8 +17,23 @@ print("=" * 50)
 CLIENT_ID = get_client_id()
 CLIENT_SECRET = get_client_secret()
 
+print("\n")
+print("=" * 50)
+print("Extracting Data")
+print("=" * 50)
+
 # Get Spotify Data and save data into csv file
 data = get_spotify_data(CLIENT_ID, CLIENT_SECRET)
+
+print("\n")
+print("=" * 50)
+print("Storing Data into data.csv")
+print("=" * 50)
+
+print("\n")
+print("=" * 50)
+print("Plotting and Storing visualizations")
+print("=" * 50)
 
 # Create visualizations from csv file
 create_visualizations('data.csv', 'figures')
