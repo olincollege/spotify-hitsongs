@@ -76,10 +76,10 @@ def create_visualizations(data_file, output_dir):
     # Select 100 random values
     random_indices = np.random.choice(len(release_counts), size=100,
                                       replace=False)
-    random_values = release_counts.iloc[random_indices].sort_values()
+    random_values = release_counts.iloc[random_indices]
     # Create scatter plot
     plt.figure(figsize=(15, 6))
-    plt.scatter(random_values.index.astype(str), random_values, alpha=0.5)
+    plt.scatter(random_values.index.astype(str).sort_values(), random_values, alpha=0.5)
     plt.xlabel('Year/Month', fontsize=7)
     plt.ylabel('Number of Hit Songs')
     plt.title('Random Sample of Release Date Distribution after 01/2010')
@@ -94,6 +94,3 @@ def create_visualizations(data_file, output_dir):
     plt.title('Number of Markets vs Popularity')
     plt.savefig(output_dir + '/markets_vs_popularity.png')
     plt.clf()
-
-
-create_visualizations('data.csv', 'figures')

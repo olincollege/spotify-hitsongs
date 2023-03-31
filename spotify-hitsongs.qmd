@@ -241,7 +241,7 @@ We explore a very critical non-musical factor, the release time (month-year) of 
 
 ![](figures/release_date_distribution.png)
 
-We can interpret that very few release months have a higher number of hit songs than an average number of hit songs (which is almost between 0-10) in a month. We observe that the highest spike in the number of hit songs happens in March 2023 (more than 600 hit songs) followed by February 2023 and January 2023. This has a very interesting pattern and shows us that more number of songs in the recent months have started becoming successful when compared to the last decade.
+We can interpret that very few release months have a higher number of hit songs than an average number of hit songs (which is almost between 0-10) in a month. We observe that a spike in the number of hit songs happens in April 2016 (more than 600 hit songs). We also observe a few months when the total number of hit songs surge (more than 100 hit songs). We can interpret that songs released around start of the summer months and end of the year are more likely to become 'hit'.
 
 Next, we explore whether having explicit words/content in the lyrics of a song affects how popular it becomes. To do this, we first categorize songs based on explicit content. If they are explicit, they are classified with the label `True` otherwise `False`. We take the `mean_popularity` as explained in the above section for all songs in each of the both label categories.
 
